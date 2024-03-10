@@ -46,7 +46,7 @@ jobs:
           ls -la
           echo $HOST
           echo $USERNAME
-          scp spring-boot-application/*.jar $USERNAME@$HOST:/path/to/destination
+          scp *.jar ubuntu@ec2-44-202-81-206.compute-1.amazonaws.com:/home/ubuntu/apps
 
       - name: Restart service
         env:
