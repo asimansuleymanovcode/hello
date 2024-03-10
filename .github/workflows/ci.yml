@@ -44,6 +44,8 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ls -la
+          echo $HOST
+          echo $USERNAME
           scp spring-boot-application/*.jar $USERNAME@$HOST:/path/to/destination
 
       - name: Restart service
