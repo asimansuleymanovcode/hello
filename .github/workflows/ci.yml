@@ -42,6 +42,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          nslookup $HOST
           scp -o StrictHostKeyChecking=no *.jar $USERNAME@$HOST:/home/ubuntu/apps/hello.jar
 
       - name: Restart service
