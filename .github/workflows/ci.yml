@@ -36,14 +36,14 @@ jobs:
 
       - name: Copy file to server
         env:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USERNAME }}
-          SSH_PRIVATE_KEY: '${{ secrets.SSH_PRIVATE_KEY }}'
+          HOST: ${{ env.HOST }}
+          USERNAME: ${{ env.USERNAME }}
+          SSH_PRIVATE_KEY: ${{ env.SSH_PRIVATE_KEY }}
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          scp *.jar ubuntu@ec2-44-202-81-206.compute-1.amazonaws.com:/home/ubuntu/apps
+          scp *.jar $USERNAME@$HOST:/home/ubuntu/apps
 
       - name: Restart service
         env:
