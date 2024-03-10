@@ -38,14 +38,11 @@ jobs:
         env:
           HOST: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY: '${{ secrets.SSH_PRIVATE_KEY }}'
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ls -la
-          echo $HOST
-          echo $USERNAME
           scp *.jar ubuntu@ec2-44-202-81-206.compute-1.amazonaws.com:/home/ubuntu/apps
 
       - name: Restart service
