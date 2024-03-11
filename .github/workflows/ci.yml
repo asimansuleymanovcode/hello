@@ -3,8 +3,6 @@ name: Spring Boot CI
 on:
   push:
     branches: [ dev ]
-  pull_request:
-    branches: [ dev ]
 
 jobs:
   build:
@@ -23,32 +21,32 @@ jobs:
       with:
         name: hello-application
         path: target/*.jar
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment: aws
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: hello-application
-
-      - name: Copy file to server
-        env:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USERNAME }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          scp -o StrictHostKeyChecking=no *.jar $USERNAME@$HOST:/home/ubuntu/apps/hello.jar
-
-      - name: Restart service
-        env:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USERNAME }}
-          SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          ssh -o StrictHostKeyChecking=no $USERNAME@$HOST sudo systemctl restart $SERVICE_NAME
+#  deploy:
+#    needs: build
+#    runs-on: ubuntu-latest
+#    environment: aws
+#    steps:
+#      - name: Download artifact
+#        uses: actions/download-artifact@v2
+#        with:
+#          name: hello-application
+#
+#      - name: Copy file to server
+#        env:
+#          HOST: ${{ secrets.HOST }}
+#          USERNAME: ${{ secrets.USERNAME }}
+#          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#        run: |
+#          mkdir -p ~/.ssh
+#          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+#          chmod 600 ~/.ssh/id_rsa
+#          scp -o StrictHostKeyChecking=no *.jar $USERNAME@$HOST:/home/ubuntu/apps/hello.jar
+#
+#      - name: Restart service
+#        env:
+#          HOST: ${{ secrets.HOST }}
+#          USERNAME: ${{ secrets.USERNAME }}
+#          SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
+#          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#        run: |
+#          ssh -o StrictHostKeyChecking=no $USERNAME@$HOST sudo systemctl restart $SERVICE_NAME
